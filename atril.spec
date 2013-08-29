@@ -1,19 +1,18 @@
 %define url_ver %(echo %{version}|cut -d. -f1,2)
 %define oname mate-document-viewer
-%define name atril
 %define build_dvi 1
 %define build_impress 1
 %define major 3
 %define api 1.5.0
 %define girname    %mklibname %{name}-gir %{api}
-%define libname %mklibname %{name} %major
+%define libname %mklibname %{name} %{major}
 %define develname %mklibname -d %{name}
-%define liboname %mklibname %{oname} %major
+%define liboname %mklibname %{oname} %{major}
 
 Summary:        MATE Document viewer
-Name:           %{name}
+Name:           atril
 Version:        1.6.1
-Release:        1
+Release:        2
 License:        GPLv2+
 Url:            http://mate-desktop.org/
 Group:          Graphical desktop/Other
@@ -54,18 +53,19 @@ BuildRequires:  djvulibre-devel
 
 Requires:      ghostscript
 Requires:      ghostscript-module-X
-Provides:      %{oname} = %{version}-%{release}
+
+%rename %{oname}
 
 %description
 Atril is the MATE Document viewer.
 
-%package -n %libname
+%package -n %{libname}
 Group:   System/Libraries
 Summary: MATE Document viewer library
 Provides: %{liboname} = %{version}-%{release}
 
-%description -n %libname
-This is the MATE Document viewer library, the shared parts of %name.
+%description -n %{libname}
+This is the MATE Document viewer library, the shared parts of %{name}.
 
 %package -n %{girname}
 Summary:        GObject Introspection interface description for %{name}
@@ -75,15 +75,15 @@ Requires:       %{libname} = %{version}
 %description -n %{girname}
 GObject Introspection interface description for %{name}
 
-%package -n %develname
+%package -n %{develname}
 Group:Development/C
 Summary: MATE Document viewer library
 Requires: %{libname} = %{version}
-Provides: %{oname}-devel = %version-%release
-Provides: %{name}-devel = %version-%release
+Provides: %{oname}-devel = %{version}-%{release}
+Provides: %{name}-devel = %{version}-%{release}
 
-%description -n %develname
-This is the MATE Document viewer library, the shared parts of %name.
+%description -n %{develname}
+This is the MATE Document viewer library, the shared parts of %{name}.
 
 %prep
 %setup -q -n %{oname}-%{version}
@@ -118,12 +118,10 @@ make LIBS='-lm -lz -lgmodule-2.0'
 
 # remove of gsetting,convert file, no need for this in fedora
 # because MATE starts with gsetting in fedora.
-rm -f $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/atril.convert
+rm -f %{buildroot}%{_datadir}/MateConf/gsettings/atril.convert
 
-%find_lang %name --with-gnome
-cat %name.lang >> Atril.lang
-
-find %{buildroot} -name *.la -delete
+%find_lang %{name} --with-gnome
+cat %{name}.lang >> Atril.lang
 
 %files -f Atril.lang
 %doc README COPYING NEWS AUTHORS
@@ -141,31 +139,31 @@ find %{buildroot} -name *.la -delete
 %{_mandir}/man1/atril-*.1.*
 %{_mandir}/man1/atril.1.*
 
-%files -n %libname
+%files -n %{libname}
 %{_libdir}/libatrildocument.so.%{major}*
 %{_libdir}/libatrilview.so.%{major}*
 %{_libdir}/caja/extensions-2.0/libatril*so*
-%dir %{_libdir}/%name/%major/
-%dir %{_libdir}/%name/%major/backends
-%{_libdir}/%name/%major/backends/lib*so*
-%{_libdir}/%name/%major/backends/comicsdocument.%name-backend
-%{_libdir}/%name/%major/backends/djvudocument.%name-backend
-%{_libdir}/%name/%major/backends/xpsdocument.%name-backend
-%{_libdir}/atril/%{major}/backends/dvidocument.%name-backend
-%{_libdir}/%name/%major/backends/pdfdocument.%name-backend
-%{_libdir}/%name/%major/backends/pixbufdocument.%name-backend
-%{_libdir}/%name/%major/backends/psdocument.%name-backend
-%{_libdir}/%name/%major/backends/tiffdocument.%name-backend
+%dir %{_libdir}/%{name}/%{major}/
+%dir %{_libdir}/%{name}/%{major}/backends
+%{_libdir}/%{name}/%{major}/backends/lib*so*
+%{_libdir}/%{name}/%{major}/backends/comicsdocument.%{name}-backend
+%{_libdir}/%{name}/%{major}/backends/djvudocument.%{name}-backend
+%{_libdir}/%{name}/%{major}/backends/xpsdocument.%{name}-backend
+%{_libdir}/atril/%{major}/backends/dvidocument.%{name}-backend
+%{_libdir}/%{name}/%{major}/backends/pdfdocument.%{name}-backend
+%{_libdir}/%{name}/%{major}/backends/pixbufdocument.%{name}-backend
+%{_libdir}/%{name}/%{major}/backends/psdocument.%{name}-backend
+%{_libdir}/%{name}/%{major}/backends/tiffdocument.%{name}-backend
 
 %files -n %{girname}
 %{_libdir}/girepository-1.0/AtrilDocument-%{api}.typelib
 %{_libdir}/girepository-1.0/AtrilView-%{api}.typelib
 
-%files -n %develname
+%files -n %{develname}
 %doc ChangeLog
 %{_datadir}/gtk-doc/html/atril
-%{_datadir}/gtk-doc/html/libatrildocument-%api
-%{_datadir}/gtk-doc/html/libatrilview-%api
+%{_datadir}/gtk-doc/html/libatrildocument-%{api}
+%{_datadir}/gtk-doc/html/libatrilview-%{api}
 %{_libdir}/libatrildocument.so
 %{_libdir}/libatrilview.so
 %{_libdir}/pkgconfig/atril*pc
