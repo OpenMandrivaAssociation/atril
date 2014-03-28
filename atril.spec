@@ -20,12 +20,9 @@ Patch0:		Check-for-NULL-in-synctex_backward_search.patch
 Patch1:		atril-1.6.0-mga-Update-to-poppler-api-changes.patch
 Patch2:		backends_-Fix-another-security-issue-in-the-dvi-backend.patch
 Patch3:		backends_-Fix-several-security-issues-in-the-dvi-backend.patch
-
-BuildRequires:	docbook-dtd412-xml
 BuildRequires:	ghostscript
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
-BuildRequires:	itstool
 BuildRequires:	mate-common
 BuildRequires:	which
 BuildRequires:	xml2po
@@ -90,19 +87,17 @@ NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure2_5x \
-	--with-pic                                                          \
-	--disable-static                                                    \
-	--with-gtk=2.0                                                      \
-	--enable-introspection                                              \
-	--enable-gtk-doc                                                    \
-	--enable-pdf                                                        \
-	--enable-tiff                                                       \
-	--enable-djvu                                                       \
-	--enable-dvi                                                        \
-	--enable-pixbuf                                                     \
-	--enable-comics                                                     \
-	--enable-dvi 						       \
-	--enable-xps  
+	--with-pic \
+	--disable-static \
+	--enable-introspection \
+	--enable-pdf \
+	--enable-tiff \
+	--enable-djvu \
+	--enable-dvi \
+	--enable-pixbuf \
+	--enable-comics \
+	--enable-dvi \
+	--enable-xps
 
 %make
 
@@ -111,7 +106,7 @@ NOCONFIGURE=1 ./autogen.sh
 
 # remove of gsetting,convert file, no need for this in fedora
 # because MATE starts with gsetting in fedora.
-rm -f %{buildroot}%{_datadir}/MateConf/gsettings/atril.convert
+rm -f %{buildroot}%{_datadir}/MateConf
 
 %find_lang %{name} --with-gnome --all-name
 cat %{name}.lang >> Atril.lang
