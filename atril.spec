@@ -24,9 +24,6 @@ BuildRequires:	ghostscript
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
 BuildRequires:	mate-common
-BuildRequires:	which
-BuildRequires:	xml2po
-BuildRequires:	xsltproc
 BuildRequires:	yelp-tools
 BuildRequires:	tiff-devel
 BuildRequires:	pkgconfig(cairo)
@@ -106,7 +103,7 @@ NOCONFIGURE=1 ./autogen.sh
 
 # remove of gsetting,convert file, no need for this in fedora
 # because MATE starts with gsetting in fedora.
-rm -f %{buildroot}%{_datadir}/MateConf
+rm -fr %{buildroot}%{_datadir}/MateConf
 
 %find_lang %{name} --with-gnome --all-name
 cat %{name}.lang >> Atril.lang
