@@ -10,7 +10,7 @@
 
 Summary:	MATE Document viewer
 Name:		atril
-Version:	1.8.0
+Version:	1.8.1
 Release:	1
 License:	GPLv2+
 Url:		http://mate-desktop.org/
@@ -80,12 +80,10 @@ This is the MATE Document viewer library, the shared parts of %{name}.
 %prep
 %setup -q
 %apply_patches
-NOCONFIGURE=1 ./autogen.sh
 
 %build
-%configure2_5x \
+%configure \
 	--with-pic \
-	--disable-static \
 	--enable-introspection \
 	--enable-pdf \
 	--enable-tiff \
