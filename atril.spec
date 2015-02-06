@@ -11,7 +11,7 @@
 Summary:	MATE Document viewer
 Name:		atril
 Version:	1.8.1
-Release:	1
+Release:	2
 License:	GPLv2+
 Url:		http://mate-desktop.org/
 Group:		Graphical desktop/Other
