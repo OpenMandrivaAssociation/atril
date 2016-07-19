@@ -10,16 +10,12 @@
 
 Summary:	MATE Document viewer
 Name:		atril
-Version:	1.8.1
-Release:	2
+Version:	1.14.0
+Release:	1
 License:	GPLv2+
 Url:		http://mate-desktop.org/
 Group:		Graphical desktop/Other
 Source0:	http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
-Patch0:		Check-for-NULL-in-synctex_backward_search.patch
-Patch1:		atril-1.6.0-mga-Update-to-poppler-api-changes.patch
-Patch2:		backends_-Fix-another-security-issue-in-the-dvi-backend.patch
-Patch3:		backends_-Fix-several-security-issues-in-the-dvi-backend.patch
 BuildRequires:	ghostscript
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
@@ -31,12 +27,11 @@ BuildRequires:	pkgconfig(ddjvuapi)
 BuildRequires:	pkgconfig(gail)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
-BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(libcaja-extension)
 BuildRequires:	pkgconfig(libsecret-1)
 BuildRequires:	pkgconfig(libspectre)
 BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	pkgconfig(mate-icon-theme)
 BuildRequires:	pkgconfig(poppler-glib)
 BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(x11)
@@ -92,7 +87,8 @@ This is the MATE Document viewer library, the shared parts of %{name}.
 	--enable-pixbuf \
 	--enable-comics \
 	--enable-dvi \
-	--enable-xps
+	--enable-xps \
+	--with-gtk=3.0
 
 %make
 
@@ -118,10 +114,12 @@ cat %{name}.lang >> Atril.lang
 %{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
 %{_datadir}/glib-2.0/schemas/org.mate.Atril.gschema.xml
 %{_datadir}/thumbnailers/atril.thumbnailer
+%{_datadir}/appdata/atril.appdata.xml
 %{_mandir}/man1/atril-*.1*
 %{_mandir}/man1/atril.1*
 
 %{_libdir}/caja/extensions-2.0/libatril*so*
+%{_datadir}/caja/extensions/libatril-properties-page.caja-extension
 %dir %{_libdir}/%{name}/%{major}/
 %dir %{_libdir}/%{name}/%{major}/backends
 %{_libdir}/%{name}/%{major}/backends/lib*so*
@@ -133,6 +131,7 @@ cat %{name}.lang >> Atril.lang
 %{_libdir}/%{name}/%{major}/backends/pixbufdocument.%{name}-backend
 %{_libdir}/%{name}/%{major}/backends/psdocument.%{name}-backend
 %{_libdir}/%{name}/%{major}/backends/tiffdocument.%{name}-backend
+%{_libdir}/%{name}/%{major}/backends/epubdocument.atril-backend
 
 %files -n %{libname}
 %{_libdir}/libatrildocument.so.%{major}*
