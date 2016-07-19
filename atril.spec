@@ -35,6 +35,7 @@ BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(mate-desktop-2.0)
 BuildRequires:	pkgconfig(poppler-glib)
 BuildRequires:	pkgconfig(sm)
+BuildRequires:	pkgconfig(webkit2gtk-4.0)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(libgxps)
 #gw just like xdvi, needed for rendering the fonts
