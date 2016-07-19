@@ -24,7 +24,7 @@ BuildRequires:	yelp-tools
 BuildRequires:	tiff-devel
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(ddjvuapi)
-BuildRequires:	pkgconfig(gail)
+BuildRequires:	pkgconfig(gail-3.0)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(gtk+-3.0)
