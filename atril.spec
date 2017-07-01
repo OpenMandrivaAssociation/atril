@@ -10,12 +10,12 @@
 
 Summary:	MATE Document viewer
 Name:		atril
-Version:	1.14.0
+Version:	1.18.0
 Release:	1
 License:	GPLv2+
-Url:		http://mate-desktop.org/
 Group:		Graphical desktop/Other
-Source0:	http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+Url:		https://mate-desktop.org/
+Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
 BuildRequires:	ghostscript
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
@@ -90,8 +90,7 @@ This is the MATE Document viewer library, the shared parts of %{name}.
 	--enable-comics \
 	--enable-dvi \
 	--enable-xps \
-	--with-gtk=3.0
-
+	%{nil}
 %make
 
 %install
@@ -101,6 +100,7 @@ This is the MATE Document viewer library, the shared parts of %{name}.
 # because MATE starts with gsetting in fedora.
 rm -fr %{buildroot}%{_datadir}/MateConf
 
+# locales
 %find_lang %{name} --with-gnome --all-name
 cat %{name}.lang >> Atril.lang
 
@@ -111,7 +111,7 @@ cat %{name}.lang >> Atril.lang
 %{_datadir}/atril/*
 %{_datadir}/applications/atril.desktop
 %{_iconsdir}/hicolor/*/apps/atril.*
-%{_libexecdir}/atril-convert-metadata
+#%{_libexecdir}/atril-convert-metadata
 %{_libexecdir}/atrild
 %{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
 %{_datadir}/glib-2.0/schemas/org.mate.Atril.gschema.xml
