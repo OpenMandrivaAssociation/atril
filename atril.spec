@@ -153,6 +153,9 @@ based on %{name}.
 
 %build
 %configure \
+	--enable-gtk-doc-html \
+	--enable-introspection \
+	--enable-introspection \
 	--disable-schemas-compile \
 	%{nil}
 %make
