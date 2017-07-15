@@ -155,7 +155,7 @@ based on %{name}.
 %configure \
 	--enable-gtk-doc-html \
 	--enable-introspection \
-	--enable-introspection \
+	--enable-pixbuf \
 	--disable-schemas-compile \
 	%{nil}
 %make
