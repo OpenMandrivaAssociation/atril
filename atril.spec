@@ -10,108 +10,68 @@
 
 Summary:	MATE Document viewer
 Name:		atril
-Version:	1.14.0
+Version:	1.18.0
 Release:	1
 License:	GPLv2+
-Url:		http://mate-desktop.org/
 Group:		Graphical desktop/Other
-Source0:	http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+Url:		https://mate-desktop.org/
+Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+
+BuildRequires:	desktop-file-utils
 BuildRequires:	ghostscript
-BuildRequires:	gtk-doc
 BuildRequires:	intltool
+BuildRequires:	itstool
 BuildRequires:	mate-common
-BuildRequires:	yelp-tools
-BuildRequires:	tiff-devel
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(ddjvuapi)
 BuildRequires:	pkgconfig(gail-3.0)
+BuildRequires:	pkgconfig(gio-2.0)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires:	pkgconfig(gtk+-unix-print-3.0)
+BuildRequires:	pkgconfig(gtk-doc)
 BuildRequires:	pkgconfig(libcaja-extension)
+BuildRequires:	pkgconfig(libgxps)
 BuildRequires:	pkgconfig(libsecret-1)
 BuildRequires:	pkgconfig(libspectre)
+BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(mate-desktop-2.0)
 BuildRequires:	pkgconfig(poppler-glib)
 BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(webkit2gtk-4.0)
 BuildRequires:	pkgconfig(x11)
-BuildRequires:	pkgconfig(libgxps)
+BuildRequires:	pkgconfig(xt)
+BuildRequires:	pkgconfig(zlib)
 #gw just like xdvi, needed for rendering the fonts
 BuildRequires:	kpathsea-devel
-BuildRequires:	pkgconfig(ddjvuapi)
+BuildRequires:	t1lib-devel
+BuildRequires:	xsltproc
+BuildRequires:	yelp-tools
 
 Requires:	ghostscript
 Requires:	ghostscript-module-X
-%rename %{oname}
-Conflicts:	%{_lib}atril3 < 1.8.0-1
+
+%rename		%{oname}
 
 %description
-Atril is the MATE Document viewer.
+The MATE Desktop Environment is the continuation of GNOME 2. It provides an
+intuitive and attractive desktop environment using traditional metaphors for
+Linux and other Unix-like operating systems.
 
-%package -n %{libname}
-Group:		System/Libraries
-Summary:	MATE Document viewer library
+MATE is under active development to add support for new technologies while
+preserving a traditional desktop experience.
 
-%description -n %{libname}
-This is the MATE Document viewer library, the shared parts of %{name}.
+This package provides Atril, the Document viewer for Mate desktop.
 
-%package -n %{girname}
-Summary:	GObject Introspection interface description for %{name}
-Group:		System/Libraries
-
-%description -n %{girname}
-GObject Introspection interface description for %{name}
-
-%package -n %{devname}
-Group:Development/C
-Summary:	MATE Document viewer library
-Requires:	%{libname} = %{version}-%{release}
-Requires:	%{girname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
-
-%description -n %{devname}
-This is the MATE Document viewer library, the shared parts of %{name}.
-
-%prep
-%setup -q
-%apply_patches
-
-%build
-%configure \
-	--with-pic \
-	--enable-introspection \
-	--enable-pdf \
-	--enable-tiff \
-	--enable-djvu \
-	--enable-dvi \
-	--enable-pixbuf \
-	--enable-comics \
-	--enable-dvi \
-	--enable-xps \
-	--with-gtk=3.0
-
-%make
-
-%install
-%makeinstall_std
-
-# remove of gsetting,convert file, no need for this in fedora
-# because MATE starts with gsetting in fedora.
-rm -fr %{buildroot}%{_datadir}/MateConf
-
-%find_lang %{name} --with-gnome --all-name
-cat %{name}.lang >> Atril.lang
-
-%files -f Atril.lang
+%files -f %{name}.lang
 %doc README COPYING NEWS AUTHORS
 %{_bindir}/*
 %dir %{_datadir}/atril
 %{_datadir}/atril/*
 %{_datadir}/applications/atril.desktop
 %{_iconsdir}/hicolor/*/apps/atril.*
-%{_libexecdir}/atril-convert-metadata
 %{_libexecdir}/atrild
 %{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
 %{_datadir}/glib-2.0/schemas/org.mate.Atril.gschema.xml
@@ -119,7 +79,6 @@ cat %{name}.lang >> Atril.lang
 %{_datadir}/appdata/atril.appdata.xml
 %{_mandir}/man1/atril-*.1*
 %{_mandir}/man1/atril.1*
-
 %{_libdir}/caja/extensions-2.0/libatril*so*
 %{_datadir}/caja/extensions/libatril-properties-page.caja-extension
 %dir %{_libdir}/%{name}/%{major}/
@@ -135,13 +94,44 @@ cat %{name}.lang >> Atril.lang
 %{_libdir}/%{name}/%{major}/backends/tiffdocument.%{name}-backend
 %{_libdir}/%{name}/%{major}/backends/epubdocument.atril-backend
 
+#---------------------------------------------------------------------------
+
+%package -n %{libname}
+Summary:	MATE Document viewer library
+Group:		System/Libraries
+
+%description -n %{libname}
+This package contains the shared libraries used by %{name}.
+
 %files -n %{libname}
 %{_libdir}/libatrildocument.so.%{major}*
 %{_libdir}/libatrilview.so.%{major}*
 
+#---------------------------------------------------------------------------
+
+%package -n %{girname}
+Summary:	GObject Introspection interface description for %{name}
+Group:		System/Libraries
+
+%description -n %{girname}
+This package contains GObject Introspection interface library for %{name}.
+
 %files -n %{girname}
 %{_libdir}/girepository-1.0/AtrilDocument-%{api}.typelib
 %{_libdir}/girepository-1.0/AtrilView-%{api}.typelib
+
+#---------------------------------------------------------------------------
+
+%package -n %{devname}
+Summary:	MATE Document viewer library
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
+Requires:	%{girname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
+
+%description -n %{devname}
+This package contains libraries and includes files for developing programs
+based on %{name}.
 
 %files -n %{devname}
 %doc ChangeLog
@@ -154,4 +144,28 @@ cat %{name}.lang >> Atril.lang
 %{_includedir}/atril*
 %{_datadir}/gir-1.0/AtrilDocument-%{api}.gir
 %{_datadir}/gir-1.0/AtrilView-%{api}.gir
+
+#---------------------------------------------------------------------------
+
+%prep
+%setup -q
+%apply_patches
+
+%build
+%configure \
+	--enable-gtk-doc-html \
+	--enable-introspection \
+	--enable-pixbuf \
+	--disable-schemas-compile \
+	%{nil}
+%make
+
+%install
+%makeinstall_std
+
+# locales
+%find_lang %{name} --with-gnome --all-name
+
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
