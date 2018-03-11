@@ -1,4 +1,5 @@
 removed_sources:
   atril-1.14.0.tar.xz: 1cc240cba3f32ddda7ffeabe6c30a0838576e96d
-sources:
   atril-1.18.0.tar.xz: 5cbcd69733bd5ba23c10a60b2a2350171d95ddf6
+sources:
+  atril-1.20.0.tar.xz: 0cdb45a75bb7449f4339cd9d2f348d41168093b6
