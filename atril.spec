@@ -149,7 +149,7 @@ based on %{name}.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 %build
 %configure \
@@ -158,14 +158,13 @@ based on %{name}.
 	--enable-pixbuf \
 	--disable-schemas-compile \
 	%{nil}
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 # locales
 %find_lang %{name} --with-gnome --all-name
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
-
