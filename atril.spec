@@ -152,8 +152,9 @@ based on %{name}.
 %apply_patches
 
 %build
+export CPPFLAGS='-std=c++11'
 %configure \
-	--enable-gtk-doc-html \
+	--enable-gtk-doc \
 	--enable-introspection \
 	--enable-pixbuf \
 	--disable-schemas-compile \
