@@ -152,7 +152,8 @@ based on %{name}.
 %apply_patches
 
 %build
-export CPPFLAGS='-std=c++11'
+# ugly hack: force clang++ to be c++11 compilant. Setting CXXFLAGS fails.
+export CXX="/usr/bin/clang++ -std=c++11"
 %configure \
 	--enable-gtk-doc \
 	--enable-introspection \
