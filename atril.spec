@@ -76,7 +76,7 @@ This package provides Atril, the Document viewer for Mate desktop.
 %{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
 %{_datadir}/glib-2.0/schemas/org.mate.Atril.gschema.xml
 %{_datadir}/thumbnailers/atril.thumbnailer
-%{_datadir}/appdata/atril.appdata.xml
+%{_datadir}/metainfo/atril.appdata.xml
 %{_mandir}/man1/atril-*.1*
 %{_mandir}/man1/atril.1*
 %{_libdir}/caja/extensions-2.0/libatril*so*
