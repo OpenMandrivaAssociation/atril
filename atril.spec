@@ -10,7 +10,7 @@
 
 Summary:	MATE Document viewer
 Name:		atril
-Version:	1.20.3
+Version:	1.22.1
 Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/Other
