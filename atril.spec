@@ -45,6 +45,7 @@ BuildRequires:	pkgconfig(webkit2gtk-4.0)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(zlib)
+BuildRequires:	pkgconfig(synctex)
 #gw just like xdvi, needed for rendering the fonts
 BuildRequires:	kpathsea-devel
 BuildRequires:	t1lib-devel
