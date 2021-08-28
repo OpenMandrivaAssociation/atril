@@ -68,7 +68,7 @@ preserving a traditional desktop experience.
 This package provides Atril, the Document viewer for Mate desktop.
 
 %files -f %{name}.lang
-%doc README COPYING NEWS AUTHORS
+%doc README* COPYING NEWS AUTHORS
 %{_bindir}/*
 %dir %{_datadir}/atril
 %{_datadir}/atril/*
