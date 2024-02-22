@@ -1,22 +1,22 @@
-%define url_ver %(echo %{version}|cut -d. -f1,2)
+%define mate_ver	%(echo %{version}|cut -d. -f1,2)
 %define oname mate-document-viewer
 %define build_dvi 1
 
 %define api 1.5.0
 %define major 3
 %define girname	%mklibname %{name}-gir %{api}
-%define oldlibname %mklibname %{name} 3
 %define libname %mklibname %{name}
-%define devname %mklibname -d %{name}
+%define devname %mklibname %{name} -d
+%define oldlibname %mklibname %{name} 3
 
 Summary:	MATE Document viewer
 Name:		atril
-Version:	1.26.2
+Version:	1.28.0
 Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/Other
 Url:		https://mate-desktop.org/
-Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+Source0:	https://pub.mate-desktop.org/releases/%{mate_ver}/%{name}-%{version}.tar.xz
 
 BuildRequires:	autoconf-archive
 BuildRequires:	desktop-file-utils
@@ -102,7 +102,7 @@ This package provides Atril, the Document viewer for Mate desktop.
 %package -n %{libname}
 Summary:	MATE Document viewer library
 Group:		System/Libraries
-%rename %{oldlibname}
+Obsoletes:	%{oldlibname} < %{EVRD}
 
 %description -n %{libname}
 This package contains the shared libraries used by %{name}.
