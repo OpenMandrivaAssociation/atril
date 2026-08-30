@@ -20,7 +20,9 @@ Url:		https://mate-desktop.org/
 # Use for now tarball from GitHub because from few months sources at mate-desktop.org was not updated.
 Source0:	https://github.com/mate-desktop/atril/releases/download/v%{version}/atril-%{version}.tar.xz
 
-BuildRequires:	meson
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	make
 BuildRequires:	autoconf-archive
 BuildRequires:	desktop-file-utils
@@ -161,30 +163,16 @@ based on %{name}.
 %autosetup -p1
 
 %build
-%meson	\
-	-Dcomics=enabled \
-	-Ddjvu=enabled \
-	-Ddvi=enabled \
-	-Ddjvu=enabled \
-	-Depub=enabled \
-	-Dpdf=enabled \
-	-Dpixbuf=enabled \
-	-Dps=enabled \
-	-Dtiff=enabled \
-	-Dxps=enabled \
-	-Dcaja=enabled \
-	-Dgtk_unix_print=true \
-	-Dkeyring=true \
-	-Dpreviewer=true \
-	-Dthumbnailer=true \
-	-Ddocs=true \
-	-Dintrospection=true \
-	-Denable_dbus=true
-	
-%meson_build
+%configure \
+	--enable-gtk-doc-html \
+	--enable-introspection \
+	--enable-pixbuf \
+	--disable-schemas-compile \
+	%{nil}
+%make_build
 
 %install
-%meson_install
+%make_install
 
 # locales
 %find_lang %{name} --with-gnome --all-name
