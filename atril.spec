@@ -11,16 +11,16 @@
 
 Summary:	MATE Document viewer
 Name:		atril
-Version:	1.28.1
-Release:	2
+Version:	1.28.7
+Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/Other
 Url:		https://mate-desktop.org/
-Source0:	https://pub.mate-desktop.org/releases/%{mate_ver}/%{name}-%{version}.tar.xz
+#Source0:	https://pub.mate-desktop.org/releases/%{mate_ver}/%{name}-%{version}.tar.xz
+# Use for now tarball from GitHub because from few months sources at mate-desktop.org was not updated.
+Source0:	https://github.com/mate-desktop/atril/releases/download/v%{version}/atril-%{version}.tar.xz
 
-BuildRequires:	automake
-BuildRequires:	libtool-base
-BuildRequires:	slibtool
+BuildRequires:	meson
 BuildRequires:	make
 BuildRequires:	autoconf-archive
 BuildRequires:	desktop-file-utils
@@ -39,6 +39,7 @@ BuildRequires:	pkgconfig(gtk+-unix-print-3.0)
 BuildRequires:	pkgconfig(gtk-doc)
 BuildRequires:	pkgconfig(harfbuzz-gobject)
 BuildRequires:	pkgconfig(libcaja-extension)
+BuildRequires:	pkgconfig(libgepub-0.7)
 BuildRequires:	pkgconfig(libgxps)
 BuildRequires:	pkgconfig(libsecret-1)
 BuildRequires:	pkgconfig(libspectre)
@@ -160,16 +161,30 @@ based on %{name}.
 %autosetup -p1
 
 %build
-%configure \
-	--enable-gtk-doc-html \
-	--enable-introspection \
-	--enable-pixbuf \
-	--disable-schemas-compile \
-	%{nil}
-%make_build
+%meson	\
+	-Dcomics=enabled \
+	-Ddjvu=enabled \
+	-Ddvi=enabled \
+	-Ddjvu=enabled \
+	-Depub=enabled \
+	-Dpdf=enabled \
+	-Dpixbuf=enabled \
+	-Dps=enabled \
+	-Dtiff=enabled \
+	-Dxps=enabled \
+	-Dcaja=enabled \
+	-Dgtk_unix_print=true \
+	-Dkeyring=true \
+	-Dpreviewer=true \
+	-Dthumbnailer=true \
+	-Ddocs=true \
+	-Dintrospection=true \
+	-Denable_dbus=true
+	
+%meson_build
 
 %install
-%make_install
+%meson_install
 
 # locales
 %find_lang %{name} --with-gnome --all-name
