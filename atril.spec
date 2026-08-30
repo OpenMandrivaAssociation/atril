@@ -169,6 +169,11 @@ based on %{name}.
 	--enable-pixbuf \
 	--disable-schemas-compile \
 	%{nil}
+export CC="clang -m64"
+export CXX="clang++ -m64"
+export CFLAGS="${CFLAGS} -m64"
+export CXXFLAGS="${CXXFLAGS} -m64"
+export LDFLAGS="${LDFLAGS} -m64 -Wl,-m,elf_x86_64"	
 %make_build
 
 %install
